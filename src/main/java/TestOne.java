@@ -1,7 +1,10 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -29,29 +32,28 @@ public class TestOne {
     }
 
     @Test
-    public void testCalc() {
+    public void testCalc() throws InterruptedException {
         driver.navigate().to("http://juliemr.github.io/protractor-demo");       // Step1 - to open Page
         String label = driver.findElement(By.xpath("//h3")).getText();
         Assert.assertEquals(label, "Super Calculator");
 
-        driver.findElement(By.xpath("//input[1]")).sendKeys("1");       // Step2 - to input values 1 and 2
-                                                                                        // ???
-        Assert.assertEquals(input1, "1");
+        driver.findElement(By.xpath("//*[@ng-model='first']")).sendKeys("1");       // Step2 - to input values 1 and 2
+   //     String input1 = driver.findElement(By.xpath("//input[1]")).getText();
+    //     Assert.assertEquals(input1, "1");
 
+        driver.findElement(By.xpath("//*[@ng-model='second']")).sendKeys("2");
+   //     String input2 = driver.findElement(By.xpath("//input[2]")).getText();
+   //     Assert.assertEquals(input1, "2");
 
-        Select dropdown = new Select(driver.findElement(By.xpath("//select[@ng-model=‘operator’]"))); //initialize dropdown
-        dropdown.selectByValue(‘ADDITION’); //select plus
-        WebElement addition = driver.findElement(By.xpath(“//option[@value=[’ADDITION’]”)); //initialize plus element
+        Select dropdown = new Select(driver.findElement(By.xpath("//*[@ng-model='operator']")));    // Step3 - to select "+" in drop-down
+        dropdown.selectByValue("ADDITION");
+      //  String dropdown2 = driver.findElement(By.xpath("//html/body/div/div/form/select")).getText();
+       // Assert.assertEquals(dropdown2, "ADDITION");
 
-                // Assert.assertEquals(addition.getAttribute("selected"), “selected”); //assert that attribute value equals “selected”
-
-
-        driver.findElement(By.id(“gobutton”)).click();	//click on Go button
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(“//tbody/tr/td”))); // wait until first record in history table  is appear
-                string result = driver.findElement(By.xpath[“//h2[“@class=’ng-binding’”]]).getText(); //get result text
-                        Assert.assertEquals(“2”, result); //assert that result is 2
-
-
+        driver.findElement(By.xpath("//*[@id='gobutton']")).click();               // Step4 - to click "Go!" and assert result
+        Thread.sleep(5000);                                                 // govnokod
+        String result = driver.findElement(By.xpath("//*[@class='ng-binding']")).getText();
+        Assert.assertEquals(result, "3");
 
     }
 
