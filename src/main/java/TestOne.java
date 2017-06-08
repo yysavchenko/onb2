@@ -38,23 +38,24 @@ public class TestOne {
         Assert.assertEquals(label, "Super Calculator");
 
         driver.findElement(By.xpath("//*[@ng-model='first']")).sendKeys("1");       // Step2 - to input values 1 and 2
-   //     String input1 = driver.findElement(By.xpath("//input[1]")).getText();
-    //     Assert.assertEquals(input1, "1");
+        String input1 = driver.findElement(By.xpath("//*[@ng-model='first']")).getAttribute("value");
+        Assert.assertEquals(input1, "1");
 
         driver.findElement(By.xpath("//*[@ng-model='second']")).sendKeys("2");
-   //     String input2 = driver.findElement(By.xpath("//input[2]")).getText();
-   //     Assert.assertEquals(input1, "2");
+        String input2 = driver.findElement(By.xpath("//*[@ng-model='second']")).getAttribute("value");
+        Assert.assertEquals(input2, "2");
 
         Select dropdown = new Select(driver.findElement(By.xpath("//*[@ng-model='operator']")));    // Step3 - to select "+" in drop-down
         dropdown.selectByValue("ADDITION");
-      //  String dropdown2 = driver.findElement(By.xpath("//html/body/div/div/form/select")).getText();
-       // Assert.assertEquals(dropdown2, "ADDITION");
+        String dropdownContent = driver.findElement(By.xpath("//*[@ng-model='operator']/option[@selected='selected']")).getText();
+        Assert.assertEquals(dropdownContent, "+");
 
         driver.findElement(By.xpath("//*[@id='gobutton']")).click();               // Step4 - to click "Go!" and assert result
         Thread.sleep(5000);                                                 // govnokod
         String result = driver.findElement(By.xpath("//*[@class='ng-binding']")).getText();
         Assert.assertEquals(result, "3");
 
+        driver.close();
     }
 
     }
